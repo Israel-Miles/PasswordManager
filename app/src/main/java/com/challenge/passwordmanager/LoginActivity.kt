@@ -3,6 +3,8 @@ package com.challenge.passwordmanager
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -55,5 +57,31 @@ class LoginActivity : AppCompatActivity() {
                 CreateAccountActivity::class.java)) }
 
         btnLogin!!.setOnClickListener { loginUser() }
+    }
+
+    private fun loginUser() {
+        email = etEmail?.text.toString()
+        password = etPassword?.text.toString()
+        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+            mProgressBar!!.setMessage("Registering User...")
+            mProgressBar!!.visibility =
+            Log.d(TAG, "Logging in user.")
+            mAuth!!.signInWithEmailAndPassword(email!!, password!!)
+                .addOnCompleteListener(this) { task ->
+                    mProgressBar!!.hide()
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with signed-in user's information
+                        Log.d(TAG, "signInWithEmail:success")
+                        updateUI()
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.e(TAG, "signInWithEmail:failure", task.exception)
+                        Toast.makeText(this@LoginActivity, "Authentication failed.",
+                            Toast.LENGTH_SHORT).show()
+                    }
+                }
+        } else {
+            Toast.makeText(this, "Enter all details", Toast.LENGTH_SHORT).show()
+        }
     }
 }
