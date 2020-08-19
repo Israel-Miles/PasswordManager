@@ -72,15 +72,14 @@ class CreateAccountActivity : AppCompatActivity() {
             mAuth!!
                 .createUserWithEmailAndPassword(email!!, password!!)
                 .addOnCompleteListener(this) { task ->
-                    mProgressBar!!.setVisibility(View.INVISIBLE)
+                    mProgressBar!!.visibility = View.INVISIBLE
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "createUserWithEmail:success")
 
                         val userId = mAuth!!.currentUser!!.uid
 
-                        //Verify Email
-//                        verifyEmail()
+                        verifyEmail()
 
                         //update user profile information
                         val currentUserDb = mDatabaseReference!!.child(userId)
@@ -107,5 +106,22 @@ class CreateAccountActivity : AppCompatActivity() {
         val intent = Intent(this@CreateAccountActivity, CreateAccountActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
+    }
+
+    private fun verifyEmail() {
+        val mUser = mAuth!!.currentUser
+        mUser!!.sendEmailVerification()
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(this@CreateAccountActivity,
+                        "Verification email sent to " + mUser.email,
+                        Toast.LENGTH_SHORT).show()
+                } else {
+                    Log.e(TAG, "sendEmailVerification", task.exception)
+                    Toast.makeText(this@CreateAccountActivity,
+                        "Failed to send verification email.",
+                        Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 }
