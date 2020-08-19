@@ -1,5 +1,6 @@
 package com.challenge.passwordmanager
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
@@ -88,7 +89,7 @@ class CreateAccountActivity : AppCompatActivity() {
                         currentUserDb.child("email").setValue(email)
                         currentUserDb.child("password").setValue(password)
 
-//                        updateUserInfoAndUI()
+                        updateUserInfoAndUI()
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "createUserWithEmail:failure", task.exception)
@@ -99,5 +100,12 @@ class CreateAccountActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Enter all details", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun updateUserInfoAndUI() {
+        //start next activity
+        val intent = Intent(this@CreateAccountActivity, CreateAccountActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
     }
 }
