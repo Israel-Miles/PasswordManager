@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "166478515902",
+    "firebase_url": "https://passwordmanager-4e22e.firebaseio.com",
+    "project_id": "passwordmanager-4e22e",
+    "storage_bucket": "passwordmanager-4e22e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:166478515902:android:6d4b80dffdb8a87ba458ef",
+        "android_client_info": {
+          "package_name": "com.challenge.passwordmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "166478515902-262sejcq53nk34j0nahn9j5vek4laob5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDk0oHf388MfVwQU5Xp_N8Ol2TStyKMOCk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "166478515902-262sejcq53nk34j0nahn9j5vek4laob5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
