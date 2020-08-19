@@ -45,11 +45,11 @@ class LoginActivity : AppCompatActivity() {
 
         mAuth = FirebaseAuth.getInstance()
 
-//        tvForgotPassword!!
-//            .setOnClickListener { startActivity(
-//                Intent(this@LoginActivity,
-//                ForgotPasswordActivity::class.java)
-//            ) }
+        tvForgotPassword!!
+            .setOnClickListener { startActivity(
+                Intent(this@LoginActivity,
+                ForgotPasswordActivity::class.java)
+            ) }
 
         btnCreateAccount!!
             .setOnClickListener { startActivity(Intent(this@LoginActivity,
@@ -61,6 +61,7 @@ class LoginActivity : AppCompatActivity() {
     private fun loginUser() {
         email = etEmail?.text.toString()
         password = etPassword?.text.toString()
+
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
             Toast.makeText(this, "Registering user...", Toast.LENGTH_SHORT).show()
             mProgressBar!!.visibility = View.VISIBLE
