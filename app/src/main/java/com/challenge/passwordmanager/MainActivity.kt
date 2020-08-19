@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         initialise()
     }
 
-    // Initialize Firebase database references
+    // Initialize Firebase database and authorization references
     private var fbDatabaseReference: DatabaseReference? = null
     private var fbDatabase: FirebaseDatabase? = null
     private var fbAuthInstance: FirebaseAuth? = null

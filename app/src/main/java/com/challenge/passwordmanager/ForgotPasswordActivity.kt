@@ -13,14 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class ForgotPasswordActivity : AppCompatActivity() {
 
-    private val TAG = "ForgotPasswordActivity"
-
-    // Initialise UI placeholders
-    private var etEmail: EditText? = null
-    private var btnSubmit: Button? = null
-
-    // Initialise Firebase authorization instance
-    private var fbAuthInstance: FirebaseAuth? = null
+    private val LOGGING_TAG = "ForgotPasswordActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +21,13 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
         initialise()
     }
+
+    // Initialise UI placeholders
+    private var etEmail: EditText? = null
+    private var btnSubmit: Button? = null
+
+    // Initialise Firebase authorization instance
+    private var fbAuthInstance: FirebaseAuth? = null
 
     private fun initialise() {
         etEmail = findViewById<View>(R.id.et_email) as EditText
@@ -44,11 +44,11 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val message = "Email sent."
-                        Log.d(TAG, message)
+                        Log.d(LOGGING_TAG, message)
                         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                         updateUI()
                     } else {
-                        Log.w(TAG, task.exception!!.message)
+                        Log.w(LOGGING_TAG, task.exception!!.message)
                         Toast.makeText(this, "No user found with this email.", Toast.LENGTH_SHORT).show()
                     }
                 }

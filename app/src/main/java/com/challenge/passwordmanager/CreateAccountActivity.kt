@@ -16,7 +16,14 @@ import com.google.firebase.database.FirebaseDatabase
 
 class CreateAccountActivity : AppCompatActivity() {
 
-    private val TAG = "CreateAccountActivity"
+    private val LOGGING_TAG = "CreateAccountActivity"
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_create_account)
+
+        initialise()
+    }
 
     // Initialise global variables
     private var firstName: String? = null
@@ -36,13 +43,6 @@ class CreateAccountActivity : AppCompatActivity() {
     private var fbDatabaseReference: DatabaseReference? = null
     private var fbDatabase: FirebaseDatabase? = null
     private var fbAuthInstance: FirebaseAuth? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_account)
-
-        initialise()
-    }
 
     private fun initialise() {
         etFirstName = findViewById<View>(R.id.et_first_name) as EditText
@@ -77,7 +77,7 @@ class CreateAccountActivity : AppCompatActivity() {
                     progressBar!!.visibility = View.INVISIBLE
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "createUserWithEmail:success")
+                        Log.d(LOGGING_TAG, "createUserWithEmail:success")
 
                         val userId = fbAuthInstance!!.currentUser!!.uid
 
@@ -93,7 +93,7 @@ class CreateAccountActivity : AppCompatActivity() {
                         updateUserInfoAndUI()
                     } else {
                         // If sign in fails, display a message to the user.
-                        Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                        Log.w(LOGGING_TAG, "createUserWithEmail:failure", task.exception)
                         Toast.makeText(this@CreateAccountActivity, "Email already registered!",
                             Toast.LENGTH_SHORT).show()
                     }
@@ -119,7 +119,7 @@ class CreateAccountActivity : AppCompatActivity() {
                         "Verification email sent to " + mUser.email,
                         Toast.LENGTH_SHORT).show()
                 } else {
-                    Log.e(TAG, "sendEmailVerification", task.exception)
+                    Log.e(LOGGING_TAG, "sendEmailVerification", task.exception)
                     Toast.makeText(this@CreateAccountActivity,
                         "Failed to send verification email.",
                         Toast.LENGTH_SHORT).show()

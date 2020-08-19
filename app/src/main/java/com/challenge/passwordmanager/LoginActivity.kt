@@ -11,7 +11,14 @@ import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
 
-    private val TAG = "LoginActivity"
+    private val LOGGING_TAG = "LoginActivity"
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_login)
+
+        initialise()
+    }
 
     // Initialise global variables
     private var email: String? = null
@@ -27,13 +34,6 @@ class LoginActivity : AppCompatActivity() {
 
     // Initialise Firebase instance reference
     private var fbAuthInstance: FirebaseAuth? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-
-        initialise()
-    }
 
     private fun initialise() {
         tvForgotPassword = findViewById<View>(R.id.tv_forgot_password) as TextView
@@ -65,17 +65,17 @@ class LoginActivity : AppCompatActivity() {
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
             Toast.makeText(this, "Logging in...", Toast.LENGTH_SHORT).show()
             progressBar!!.visibility = View.VISIBLE
-            Log.d(TAG, "Logging in user.")
+            Log.d(LOGGING_TAG, "Logging in user.")
             fbAuthInstance!!.signInWithEmailAndPassword(email!!, password!!)
                 .addOnCompleteListener(this) { task ->
                     progressBar!!.visibility = View.INVISIBLE
                     if (task.isSuccessful) {
                         // Sign in success, update UI with signed-in user's information
-                        Log.d(TAG, "signInWithEmail:success")
+                        Log.d(LOGGING_TAG, "signInWithEmail:success")
                         updateUI()
                     } else {
                         // If sign in fails, display a message to the user.
-                        Log.e(TAG, "signInWithEmail:failure", task.exception)
+                        Log.e(LOGGING_TAG, "signInWithEmail:failure", task.exception)
                         Toast.makeText(this@LoginActivity, "Authentication failed.",
                             Toast.LENGTH_SHORT).show()
                     }
