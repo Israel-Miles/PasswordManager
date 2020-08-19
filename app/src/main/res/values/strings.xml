@@ -10,4 +10,6 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="welcome">Welcome to Password Manager!</string>
     <string name="send_password_reset_email">send password reset email</string>
+    <string name="title">Welcome to Password Manager!</string>
+    <string name="title_passwords">Your Passwords</string>
 </resources>

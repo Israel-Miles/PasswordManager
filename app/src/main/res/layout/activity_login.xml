@@ -4,12 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:text="@string/title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:background="@color/colorAccent"/>
+
     <EditText
         android:id="@+id/et_email"
         style="@style/viewCustom"
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
+        android:layout_below="@id/title"
         android:autofillHints="" />
 
     <EditText

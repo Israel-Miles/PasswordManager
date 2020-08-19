@@ -18,24 +18,24 @@ class CreateAccountActivity : AppCompatActivity() {
 
     private val TAG = "CreateAccountActivity"
 
-    //global variables
+    // Initialise global variables
     private var firstName: String? = null
     private var lastName: String? = null
     private var email: String? = null
     private var password: String? = null
 
-    // UI elements
+    // Initialise UI placeholders
     private var etFirstName: EditText? = null
     private var etLastName: EditText? = null
     private var etEmail: EditText? = null
     private var etPassword: EditText? = null
     private var btnCreateAccount: Button? = null
-    private var mProgressBar: ProgressBar? = null
+    private var progressBar: ProgressBar? = null
 
-    // Firebase references
-    private var mDatabaseReference: DatabaseReference? = null
-    private var mDatabase: FirebaseDatabase? = null
-    private var mAuth: FirebaseAuth? = null
+    // Initialise Firebase database references
+    private var fbDatabaseReference: DatabaseReference? = null
+    private var fbDatabase: FirebaseDatabase? = null
+    private var fbAuthInstance: FirebaseAuth? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,11 +50,11 @@ class CreateAccountActivity : AppCompatActivity() {
         etEmail = findViewById<View>(R.id.et_email) as EditText
         etPassword = findViewById<View>(R.id.et_password) as EditText
         btnCreateAccount = findViewById<View>(R.id.btn_register) as Button
-        mProgressBar = ProgressBar(this)
+        progressBar = ProgressBar(this)
 
-        mDatabase = FirebaseDatabase.getInstance()
-        mDatabaseReference = mDatabase!!.reference.child("Users")
-        mAuth = FirebaseAuth.getInstance()
+        fbDatabase = FirebaseDatabase.getInstance()
+        fbDatabaseReference = fbDatabase!!.reference.child("Users")
+        fbAuthInstance = FirebaseAuth.getInstance()
 
         btnCreateAccount!!.setOnClickListener { createNewAccount() }
     }
@@ -71,20 +71,20 @@ class CreateAccountActivity : AppCompatActivity() {
 
             Toast.makeText(this, "Registering user...", Toast.LENGTH_SHORT).show()
 
-            mAuth!!
+            fbAuthInstance!!
                 .createUserWithEmailAndPassword(email!!, password!!)
                 .addOnCompleteListener(this) { task ->
-                    mProgressBar!!.visibility = View.INVISIBLE
+                    progressBar!!.visibility = View.INVISIBLE
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "createUserWithEmail:success")
 
-                        val userId = mAuth!!.currentUser!!.uid
+                        val userId = fbAuthInstance!!.currentUser!!.uid
 
                         verifyEmail()
 
                         //update user profile information
-                        val currentUserDb = mDatabaseReference!!.child(userId)
+                        val currentUserDb = fbDatabaseReference!!.child(userId)
                         currentUserDb.child("firstName").setValue(firstName)
                         currentUserDb.child("lastName").setValue(lastName)
                         currentUserDb.child("email").setValue(email)
@@ -111,7 +111,7 @@ class CreateAccountActivity : AppCompatActivity() {
     }
 
     private fun verifyEmail() {
-        val mUser = mAuth!!.currentUser
+        val mUser = fbAuthInstance!!.currentUser
         mUser!!.sendEmailVerification()
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {

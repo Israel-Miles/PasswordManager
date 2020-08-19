@@ -7,35 +7,86 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/title"
-        android:layout_width="350dp"
+        android:id="@+id/title_passwords"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="120dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/welcome"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:gravity="center"
+        android:text="@string/title_passwords"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textStyle="bold"
-        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/colorAccent"/>
 
-    <Button
-        android:id="@+id/btn_login"
-        style="@style/viewCustom"
-        android:layout_below="@id/title"
-        android:background="@color/colorAccent"
-        android:text="@string/login_title"
-        android:textColor="@android:color/white"
-        android:textStyle="bold" />
+    <TableLayout
+        android:id="@+id/tl_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_passwords"
+        android:gravity="center_horizontal"
+        android:layout_margin="16dp">
 
-    <Button
-        android:id="@+id/btn_register"
-        style="@style/viewCustom"
-        android:layout_below="@id/btn_login"
-        android:background="@color/colorAccent"
-        android:text="@string/create_act"
-        android:textColor="@android:color/white"
-        android:textStyle="bold" />
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="First Name : "
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_first_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Last Name : "
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_last_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User Email : "
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email Verified : "
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_email_verified"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp" />
+        </TableRow>
+    </TableLayout>
 </RelativeLayout>

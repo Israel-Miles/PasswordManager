@@ -15,12 +15,12 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
     private val TAG = "ForgotPasswordActivity"
 
-    //UI elements
+    // Initialise UI placeholders
     private var etEmail: EditText? = null
     private var btnSubmit: Button? = null
 
-    //Firebase references
-    private var mAuth: FirebaseAuth? = null
+    // Initialise Firebase authorization instance
+    private var fbAuthInstance: FirebaseAuth? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,14 +32,14 @@ class ForgotPasswordActivity : AppCompatActivity() {
     private fun initialise() {
         etEmail = findViewById<View>(R.id.et_email) as EditText
         btnSubmit = findViewById<View>(R.id.btn_submit) as Button
-        mAuth = FirebaseAuth.getInstance()
+        fbAuthInstance = FirebaseAuth.getInstance()
         btnSubmit!!.setOnClickListener { sendPasswordResetEmail() }
     }
 
     private fun sendPasswordResetEmail() {
         val email = etEmail?.text.toString()
         if (!TextUtils.isEmpty(email)) {
-            mAuth!!
+            fbAuthInstance!!
                 .sendPasswordResetEmail(email)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {

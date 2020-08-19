@@ -13,20 +13,20 @@ class LoginActivity : AppCompatActivity() {
 
     private val TAG = "LoginActivity"
 
-    //global variables
+    // Initialise global variables
     private var email: String? = null
     private var password: String? = null
 
-    //UI elements
+    // Initialise UI placeholders
     private var tvForgotPassword: TextView? = null
     private var etEmail: EditText? = null
     private var etPassword: EditText? = null
     private var btnLogin: Button? = null
     private var btnCreateAccount: Button? = null
-    private var mProgressBar: ProgressBar? = null
+    private var progressBar: ProgressBar? = null
 
-    //Firebase references
-    private var mAuth: FirebaseAuth? = null
+    // Initialise Firebase instance reference
+    private var fbAuthInstance: FirebaseAuth? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,9 +41,9 @@ class LoginActivity : AppCompatActivity() {
         etPassword = findViewById<View>(R.id.et_password) as EditText
         btnLogin = findViewById<View>(R.id.btn_login) as Button
         btnCreateAccount = findViewById<View>(R.id.btn_register_account) as Button
-        mProgressBar = ProgressBar(this)
+        progressBar = ProgressBar(this)
 
-        mAuth = FirebaseAuth.getInstance()
+        fbAuthInstance = FirebaseAuth.getInstance()
 
         tvForgotPassword!!
             .setOnClickListener { startActivity(
@@ -64,11 +64,11 @@ class LoginActivity : AppCompatActivity() {
 
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
             Toast.makeText(this, "Logging in...", Toast.LENGTH_SHORT).show()
-            mProgressBar!!.visibility = View.VISIBLE
+            progressBar!!.visibility = View.VISIBLE
             Log.d(TAG, "Logging in user.")
-            mAuth!!.signInWithEmailAndPassword(email!!, password!!)
+            fbAuthInstance!!.signInWithEmailAndPassword(email!!, password!!)
                 .addOnCompleteListener(this) { task ->
-                    mProgressBar!!.visibility = View.INVISIBLE
+                    progressBar!!.visibility = View.INVISIBLE
                     if (task.isSuccessful) {
                         // Sign in success, update UI with signed-in user's information
                         Log.d(TAG, "signInWithEmail:success")
