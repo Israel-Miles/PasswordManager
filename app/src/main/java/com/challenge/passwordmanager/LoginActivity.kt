@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
@@ -34,6 +31,8 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        initialise()
     }
 
     private fun initialise() {
@@ -46,11 +45,11 @@ class LoginActivity : AppCompatActivity() {
 
         mAuth = FirebaseAuth.getInstance()
 
-        tvForgotPassword!!
-            .setOnClickListener { startActivity(
-                Intent(this@LoginActivity,
-                ForgotPasswordActivity::class.java)
-            ) }
+//        tvForgotPassword!!
+//            .setOnClickListener { startActivity(
+//                Intent(this@LoginActivity,
+//                ForgotPasswordActivity::class.java)
+//            ) }
 
         btnCreateAccount!!
             .setOnClickListener { startActivity(Intent(this@LoginActivity,
@@ -63,12 +62,12 @@ class LoginActivity : AppCompatActivity() {
         email = etEmail?.text.toString()
         password = etPassword?.text.toString()
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
-            mProgressBar!!.setMessage("Registering User...")
-            mProgressBar!!.visibility =
+            Toast.makeText(this, "Registering user...", Toast.LENGTH_SHORT).show()
+            mProgressBar!!.visibility = View.VISIBLE
             Log.d(TAG, "Logging in user.")
             mAuth!!.signInWithEmailAndPassword(email!!, password!!)
                 .addOnCompleteListener(this) { task ->
-                    mProgressBar!!.hide()
+                    mProgressBar!!.visibility = View.INVISIBLE
                     if (task.isSuccessful) {
                         // Sign in success, update UI with signed-in user's information
                         Log.d(TAG, "signInWithEmail:success")
@@ -83,5 +82,11 @@ class LoginActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Enter all details", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun updateUI() {
+        val intent = Intent(this@LoginActivity, CreateAccountActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
     }
 }

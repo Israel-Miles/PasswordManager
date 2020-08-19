@@ -103,7 +103,7 @@ class CreateAccountActivity : AppCompatActivity() {
 
     private fun updateUserInfoAndUI() {
         //start next activity
-        val intent = Intent(this@CreateAccountActivity, CreateAccountActivity::class.java)
+        val intent = Intent(this@CreateAccountActivity, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
