@@ -69,6 +69,8 @@ class CreateAccountActivity : AppCompatActivity() {
         if (!TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)
             && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
 
+            Toast.makeText(this, "Registering user...", Toast.LENGTH_SHORT).show()
+
             mAuth!!
                 .createUserWithEmailAndPassword(email!!, password!!)
                 .addOnCompleteListener(this) { task ->

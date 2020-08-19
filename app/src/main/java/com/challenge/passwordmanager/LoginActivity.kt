@@ -63,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
         password = etPassword?.text.toString()
 
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
-            Toast.makeText(this, "Registering user...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Logging in...", Toast.LENGTH_SHORT).show()
             mProgressBar!!.visibility = View.VISIBLE
             Log.d(TAG, "Logging in user.")
             mAuth!!.signInWithEmailAndPassword(email!!, password!!)
@@ -86,7 +86,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun updateUI() {
-        val intent = Intent(this@LoginActivity, CreateAccountActivity::class.java)
+        val intent = Intent(this@LoginActivity, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
