@@ -29,7 +29,7 @@ class CreateAccountActivity : AppCompatActivity() {
     private var firstName: String? = null
     private var lastName: String? = null
     private var email: String? = null
-    private var password: String? = null
+    private var master_password: String? = null
 
     // Initialise UI placeholders
     private var etFirstName: EditText? = null
@@ -63,16 +63,16 @@ class CreateAccountActivity : AppCompatActivity() {
         firstName = etFirstName?.text.toString()
         lastName = etLastName?.text.toString()
         email = etEmail?.text.toString()
-        password = etPassword?.text.toString()
+        master_password = etPassword?.text.toString()
 
         // if user has entered input for every field
         if (!TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)
-            && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+            && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(master_password)) {
 
             Toast.makeText(this, "Registering user...", Toast.LENGTH_SHORT).show()
 
             fbAuthInstance!!
-                .createUserWithEmailAndPassword(email!!, password!!)
+                .createUserWithEmailAndPassword(email!!, master_password!!)
                 .addOnCompleteListener(this) { task ->
                     progressBar!!.visibility = View.INVISIBLE
                     if (task.isSuccessful) {
@@ -88,7 +88,7 @@ class CreateAccountActivity : AppCompatActivity() {
                         currentUserDb.child("firstName").setValue(firstName)
                         currentUserDb.child("lastName").setValue(lastName)
                         currentUserDb.child("email").setValue(email)
-                        currentUserDb.child("password").setValue(password)
+                        currentUserDb.child("master_password").setValue(master_password)
 
                         updateUserInfoAndUI()
                     } else {
