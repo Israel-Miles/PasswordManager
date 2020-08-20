@@ -18,6 +18,8 @@ class CreateAccountActivity : AppCompatActivity() {
 
     private val LOGGING_TAG = "CreateAccountActivity"
 
+    private val encryptAES = AESEncryption()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_account)
@@ -29,7 +31,6 @@ class CreateAccountActivity : AppCompatActivity() {
     private var firstName: String? = null
     private var lastName: String? = null
     private var email: String? = null
-    private var master_password: String? = null
 
     // Initialise UI placeholders
     private var etFirstName: EditText? = null
@@ -63,16 +64,16 @@ class CreateAccountActivity : AppCompatActivity() {
         firstName = etFirstName?.text.toString()
         lastName = etLastName?.text.toString()
         email = etEmail?.text.toString()
-        master_password = etPassword?.text.toString()
+        val masterPassword = etPassword?.text.toString()
 
         // if user has entered input for every field
         if (!TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)
-            && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(master_password)) {
+            && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(masterPassword)) {
 
             Toast.makeText(this, "Registering user...", Toast.LENGTH_SHORT).show()
 
             fbAuthInstance!!
-                .createUserWithEmailAndPassword(email!!, master_password!!)
+                .createUserWithEmailAndPassword(email!!, masterPassword)
                 .addOnCompleteListener(this) { task ->
                     progressBar!!.visibility = View.INVISIBLE
                     if (task.isSuccessful) {
@@ -83,12 +84,17 @@ class CreateAccountActivity : AppCompatActivity() {
 
                         verifyEmail()
 
+                        // Encrypt master password using AES, key and iv need to be saved here for decryption
+                        val key = encryptAES.generateEncryptedKey(masterPassword)
+                        val iv = encryptAES.generateIV()
+                        val cipher = encryptAES.encryptPassword(masterPassword, key, iv)
+
                         //update user profile information
                         val currentUserDb = fbDatabaseReference!!.child(userId)
                         currentUserDb.child("firstName").setValue(firstName)
                         currentUserDb.child("lastName").setValue(lastName)
                         currentUserDb.child("email").setValue(email)
-                        currentUserDb.child("master_password").setValue(master_password)
+                        currentUserDb.child("encrypted_master_password").setValue(cipher)
 
                         updateUserInfoAndUI()
                     } else {
