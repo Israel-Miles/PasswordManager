@@ -1,8 +1,10 @@
 package com.challenge.passwordmanager
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -22,21 +24,11 @@ class MainActivity : AppCompatActivity() {
     private var fbAuthInstance: FirebaseAuth? = null
 
     // Initialize UI placeholders
+    private var btnLogout: Button? = null
     private var tvFirstName: TextView? = null
     private var tvLastName: TextView? = null
     private var tvEmail: TextView? = null
     private var tvEmailVerified: TextView? = null
-
-    private fun initialise() {
-        fbDatabase = FirebaseDatabase.getInstance()
-        fbDatabaseReference = fbDatabase!!.reference.child("Users")
-        fbAuthInstance = FirebaseAuth.getInstance()
-
-        tvFirstName = findViewById<View>(R.id.tv_first_name) as TextView
-        tvLastName = findViewById<View>(R.id.tv_last_name) as TextView
-        tvEmail = findViewById<View>(R.id.tv_email) as TextView
-        tvEmailVerified = findViewById<View>(R.id.tv_email_verified) as TextView
-    }
 
     override fun onStart() {
         super.onStart()
@@ -55,5 +47,31 @@ class MainActivity : AppCompatActivity() {
 
             override fun onCancelled(databaseError: DatabaseError) {}
         })
+    }
+
+    private fun initialise() {
+        btnLogout = findViewById<View>(R.id.btn_logout) as Button
+
+        fbDatabase = FirebaseDatabase.getInstance()
+        fbDatabaseReference = fbDatabase!!.reference.child("Users")
+        fbAuthInstance = FirebaseAuth.getInstance()
+
+        tvFirstName = findViewById<View>(R.id.tv_first_name) as TextView
+        tvLastName = findViewById<View>(R.id.tv_last_name) as TextView
+        tvEmail = findViewById<View>(R.id.tv_email) as TextView
+        tvEmailVerified = findViewById<View>(R.id.tv_email_verified) as TextView
+
+        btnLogout!!.setOnClickListener { logoutUser() }
+    }
+
+    private fun logoutUser() {
+        fbAuthInstance?.signOut()
+        updateUI()
+    }
+
+    private fun updateUI() {
+        val intent = Intent(this@MainActivity, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
     }
 }

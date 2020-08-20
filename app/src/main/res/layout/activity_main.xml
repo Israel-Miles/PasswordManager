@@ -21,6 +21,16 @@
         app:layout_constraintTop_toTopOf="parent"
         android:background="@color/colorAccent"/>
 
+    <Button
+        android:id="@+id/btn_logout"
+        style="@style/viewCustom"
+        android:background="@color/colorAccent"
+        android:layout_height="wrap_content"
+        android:text="@string/logout"
+        android:textColor="@android:color/white"
+        android:layout_alignParentBottom="true"
+        android:textStyle="bold" />
+
     <TableLayout
         android:id="@+id/tl_data"
         android:layout_width="match_parent"
